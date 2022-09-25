@@ -1,0 +1,13 @@
+server:
+  servlet:
+    context-path: /gt-push-info
+  port: 8080
+
+spring:
+    mvc:
+      view:
+        suffix: .jsp
+        prefix: /page/
+
+    profiles:
+      active: dev

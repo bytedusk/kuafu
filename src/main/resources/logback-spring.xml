@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>logback</contextName>
+
+    <springProperty scope="context" name="Yaml_Log_Level" source="gt.logging.level"/>
+    <springProperty scope="context" name="Yaml_Log_Path" source="gt.logging.path"/>
+
+    <property name="Log_Home" value="${Yaml_Log_Path}" scope="context"></property>
+
+    <!--输出到控制台-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} @lv~%-5level @td~%thread @msg~%msg @class~%logger{36}%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--按天生成日志-->
+    <appender name="SERVICE_JRNL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Prudent>true</Prudent>
+        <!-- 过滤器，只打印ERROR级别的日志 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>
+                ${Log_Home}/%d{yyyy-MM-dd}/%d{yyyy-MM-dd}.%i.log
+            </FileNamePattern>
+            <!--日志文件保留天数-->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} @lv~%-5level @td~%thread @msg~%msg @class~%logger{36}[%line]%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+<!--        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} -%msg%n
+            </Pattern>
+        </layout>-->
+    </appender>
+
+    <logger name="com.ms.fast.loan" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="SERVICE_JRNL"/>
+    </logger>
+
+    <!-- 开发环境下的日志配置 -->
+    <root level="${Yaml_Log_Level}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="SERVICE_JRNL"/>
+    </root>
+</configuration>

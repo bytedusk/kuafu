@@ -1,0 +1,36 @@
+spring:
+  mail:
+    host: smtp.office365.com #这里换成自己的邮箱类型 例如qq邮箱就写 smtp.qq.com
+    username: zhenghuagongong@hotmail.com #QQ邮箱
+    password: ENC(7wItI9NQhTuORomY09xsJwL1tU4D8uKDHBNkFkDUVqAmWc8VeQ5HnCmZxDsQtTiX) #邮箱密码或者授权码
+    protocol: smtp #发送邮件协议
+    properties.mail.smtp.debug: true
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.port: 587 #端口号465或587
+    properties.mail.smtp.starttls.enable: true
+    properties.mail.smtp.starttls.required: true
+    properties.mail.smtp.ssl.enable: false #开启SSL, 使用outlook邮箱smtp必须关掉
+
+    default-encoding: utf-8
+
+logging:
+  level:
+    org.springframework.boot.autoconfigure: error
+    org.springframework.boot.quartz: warn
+
+gt:
+  task:
+    cronExpression: 0 30 08 * * ?
+    dayInterval: 1
+
+  mail.to: klxx@outlook.com
+  login.user: zhl
+  login.passwd: ENC(evGasSFBpbf/M9FU0UXms58zlA1MVVimtC5I1fBqqD12tmrkVQ/PmZF2yEanADEW)
+  logging:
+    level: INFO
+    path: D:/log/gt-push-info/
+  service:
+    url: http://xgohe.f3322.net:10013/dituiren-system-new/
+    MER_PUBLIC_KEY: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqIA4Ps+a+5QMt7bbaD4nVnS0zIOMX2DK+wfg/rjiuZzAf67PrYBm7jBstnbJvLWfYYZrDtvJd46IriGrgDUwb4YAD9+4Rla7upVY7bnixAiRcrY/+Fwcx2IJlUAz8vaK+DXNsJynqA8hoUZm5kNQSPp++dr6oR8VNUpG25NyBFQIDAQAB
+    INTER_KEY: 524538F602EEF82806FE5ED2881A22C8
+    MER_PRIVATE_KEY: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKogDg+z5r7lAy3tttoPidWdLTMg4xfYMr7B+D+uOK5nMB/rs+tgGbuMGy2dsm8tZ9hhmsO28l3joiuIauANTBvhgAP37hGVru6lVjtueLECJFytj/4XBzHYgmVQDPy9or4Nc2wnKeoDyGhRmbmQ1BI+n752vqhHxU1Skbbk3IEVAgMBAAECgYAvADAiUnd7YdXhCH2t/QD9jTEBoSJcYhSS8w/cuAtc05FOIFZSvvgdAnY3wgub/5VjCIQzcgW/vrX9BPFR+Rp/XFAmGh9tMYbvHXPNwwABOwOkA2aOZkgoJsLwKVkqBn4Z+EYfqr5Y4AAxvrpzp3CXbrh5jTw0Qwf4Eszil/f6+QJBAPjlFb7GACWP5vTFzNwvORZ+XVp8DySecsSlojGfQ/DYSngd96SoTpCLc7N+ZP3xiEEDxmVX2LskM7QJl+9pnIsCQQCu+1L5QU07d0a+dsRFO6MknbnGPusskaiOLV6WOTC7Qbih+QPzj6qv4Q5PJus9dC+uQ0HgoCpcTI/PYeXTR+zfAkACnd3xqIE949povl+d/P0bqG5w0hcSqnvIZ3liDiuXr55wztfYqlBRIrYvr+d95/knvdNrI1ZK+WF1xhgL009rAkAzvRhRnx9o/+GpG5D5L6MThpeRqLT83qzKLVwUayCfndUr/2dNsyMzEgabHNTdvOcETdrCwlkEJZc4KKg+CrxdAkEAv7XdRrtsYGdlQjpY7o/XDbG9DUkSdDhb1ECu36V+u/K4sVK/F/XBllBrL5fsxfVP/6sBJRU9hmwSprP3JG9ZVA==
