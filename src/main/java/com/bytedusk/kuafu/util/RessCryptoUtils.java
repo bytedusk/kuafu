@@ -3,6 +3,7 @@ package com.bytedusk.kuafu.util;
 import org.springframework.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public class RessCryptoUtils {
@@ -10,7 +11,9 @@ public class RessCryptoUtils {
     /*
     *  默认使用GBK编码，GB18030为了兼容生僻字
     *  加解密过程中认为：非ASCII为双字节，汉字为双字节，
-    *  第一字节 0x81-0xFF，加密时转换第一字节为负值
+    *  加密：第一字节 0x81-0xFF，使用字节数组，实际为为负值，
+    *  处理后经过7次交错，进行加密得到ASCII字符串，
+    *  解密逆向顺序。
     *  ASICII < GB2312 < GBK  <  GB18030
     *  0-127      中    赟（yūn）  䶮（yǎn）
     */
@@ -205,7 +208,7 @@ public class RessCryptoUtils {
                 int count = 0;
                 while(count < zhbyte.length ) {
                     tmpInt = Integer.parseInt(numStr.substring(i, i+3));
-                    tmpInt -= 256;
+                    tmpInt -= -256;
                     zhbyte[count] = (byte) tmpInt;
                     i+=3;
                     count++;
@@ -244,7 +247,7 @@ public class RessCryptoUtils {
         RessCryptoUtils r = new RessCryptoUtils();
         String key = "0";
 
-        String enc = r.fnEncrypt("赟䶮", key);
+        String enc = r.fnEncrypt("a赟赟赟赟赟赟赟s䶮d", key);
         System.out.println(enc);
         System.out.println(r.fnDecrypt(enc, key));
     }
