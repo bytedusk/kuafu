@@ -4,6 +4,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Random;
 
 public class RessCryptoUtils {
@@ -17,7 +18,10 @@ public class RessCryptoUtils {
     *  ASICII < GB2312 < GBK  <  GB18030
     *  0-127      中    赟（yūn）  䶮（yǎn）
     */
-    public String encrypt(int[] raw, String key){
+
+    private final String ZH_CHARSET_NAME = "GB18030";
+
+    private String encrypt(int[] raw, String key){
         int[] enc = new int[raw.length+2];
         if(StringUtils.isEmpty(raw) || StringUtils.isEmpty(key)){
             return "";
@@ -42,7 +46,7 @@ public class RessCryptoUtils {
      * a1 raw, a2 key, a3 dest;
      */
     public String fnEncrypt(String raw, String key) {
-        String enc = null;
+        String enc = "";
         if (StringUtils.isEmpty(raw) || StringUtils.isEmpty(key)) {
             return enc;
         }
@@ -71,7 +75,7 @@ public class RessCryptoUtils {
             if( tmpEnc[i]>127 || tmpEnc[i]<0){
                 tmpCn = String.valueOf((char)tmpEnc[i]);
                 try {
-                    cnbyte = tmpCn.getBytes("gb18030");
+                    cnbyte = tmpCn.getBytes(ZH_CHARSET_NAME);
                 } catch (UnsupportedEncodingException e) {
 
                 }
@@ -122,7 +126,7 @@ public class RessCryptoUtils {
         return enc;
     }
 
-    String leftZeroPad(int val){
+    private String leftZeroPad(int val){
         String dest = "";
         if( val > 99){
             return String.valueOf(val);
@@ -213,21 +217,18 @@ public class RessCryptoUtils {
                     i+=3;
                     count++;
                 }
-                resultSb.append(new String(zhbyte, "GB18030"));
-                //System.out.println(new String(zhbyte, "gbk"));
+                resultSb.append(new String(zhbyte, ZH_CHARSET_NAME));
                 continue;
             }
             resultSb.append((char)tmpInt);
             i+=3;
         }
-//        System.out.println();
-
         result = resultSb.toString().substring(0,resultSb.length()-key.length());
         return result;
     }
 
-    public int[] decrypt(String raw, String key){
-        int[] result = null;
+    private int[] decrypt(String raw, String key){
+        int[] result = new int [0];
         if(StringUtils.isEmpty(raw) || StringUtils.isEmpty(key)){
             return result;
         }
@@ -245,9 +246,9 @@ public class RessCryptoUtils {
 
     public static void main(String args[]) throws UnsupportedEncodingException {
         RessCryptoUtils r = new RessCryptoUtils();
-        String key = "0";
+        String key = "mS$B_f5Rk*2g#On@6t";
 
-        String enc = r.fnEncrypt("a赟赟赟赟赟赟赟s䶮d", key);
+        String enc = r.fnEncrypt("该剧集由导演伊达永灯Yongdeng Yida指导，十多年前一只拥有巨大威力的妖兽“九尾妖狐”袭击了木叶忍者村，当时的第四代火影拼尽全力，以自己的生命为代价将“九尾妖狐”", key);
         System.out.println(enc);
         System.out.println(r.fnDecrypt(enc, key));
     }
