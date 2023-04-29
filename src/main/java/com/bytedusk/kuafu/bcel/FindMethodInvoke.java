@@ -2,11 +2,12 @@ package com.bytedusk.kuafu.bcel;
 
 import com.bytedusk.kuafu.util.RessCryptoUtils;
 import org.apache.bcel.classfile.ClassParser;
-import org.apache.bcel.classfile.ConstantPool;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,10 @@ public class FindMethodInvoke {
     public static void main(String args[]) throws IOException {
         Class targetClazz = RessCryptoUtils.class;
         String targetMethodName = "main";
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(byteArrayOutputStream, true);
+        byteArrayOutputStream.toString();
 
         String classPath = (targetClazz
                 .getResource("")+targetClazz.getSimpleName()+".class").substring(6);
@@ -70,12 +75,24 @@ public class FindMethodInvoke {
 
         });
 
+        printStream.printf("@Test\nprivate void test%s{\n", targetMethodName);
+
+
         //生成mock代码
         methodClassMap.forEach((k,v)->{
-            System.out.print("Mockito.doNothing().when("+v+")."+k.getName()+"(");
+            printStream.printf("Mockito.doNothing().when(%1$s).%2$s(", v.getSimpleName(), k.getName());
             String methodParam = Arrays.stream(new String[k.getParameterCount()])
                     .map(x->"Mock.any()").collect(Collectors.joining(","));
-            System.out.println(methodParam+");");
+            printStream.printf("%s);\n", methodParam);
         });
+
+        printStream.printf("Execution execution = executionRule.createExectuion(\"%s\");\n", targetMethodName);
+        printStream.printf("ResponseContext response = %1$s.%2$s(execution.getRawRequest(RequestContext.class)," +
+                "execution);\n", targetClazz.getSimpleName(), javaMethod.getName());
+        printStream.printf("}\n");
+
+        byteArrayOutputStream.flush();
+        System.out.println(byteArrayOutputStream.toString());
+
     }
 }
