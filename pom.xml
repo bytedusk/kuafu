@@ -54,6 +54,21 @@
 <!--            <version>2.2.2</version>-->
 <!--        </dependency>-->
 
+        <!-- BCEL 相关 -->
+        <dependency>
+            <groupId>org.apache.bcel</groupId>
+            <artifactId>bcel</artifactId>
+            <version>6.2</version>
+<!--            <scope>provided</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.12.1.GA</version>
+<!--            <scope>provided</scope>-->
+        </dependency>
+
+
         <!-- 添加servlet依赖模块 -->
         <dependency>
             <groupId>javax.servlet</groupId>
