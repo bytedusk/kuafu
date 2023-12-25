@@ -55,20 +55,39 @@
 <!--        </dependency>-->
 
         <!-- BCEL 相关 -->
+        <!-- https://mvnrepository.com/artifact/bcel/bcel -->
         <dependency>
-            <groupId>org.apache.bcel</groupId>
+            <groupId>bcel</groupId>
             <artifactId>bcel</artifactId>
-            <version>6.2</version>
-<!--            <scope>provided</scope>-->
+            <version>5.1</version>
         </dependency>
+
+        <!-- JNA -->
+        <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform -->
         <dependency>
-            <groupId>javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.12.1.GA</version>
-<!--            <scope>provided</scope>-->
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+            <version>5.13.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.13.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-maven-plugin -->
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-maven-plugin</artifactId>
+            <version>1.4.2</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.4.0</version>
+        </dependency>
         <!-- 添加servlet依赖模块 -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -111,6 +130,11 @@
         </plugins>-->
 
         <plugins>
+            <plugin>
+                <groupId>com.bytedusk</groupId>
+                <artifactId>utcg-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

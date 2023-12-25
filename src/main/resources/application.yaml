@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /gt-push-info
+    context-path: /kuafu
   port: 8080
 
 spring:
